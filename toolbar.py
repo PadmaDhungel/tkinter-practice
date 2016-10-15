@@ -7,6 +7,15 @@ class TkInterEx:
     def quit_app(event=None):
         root.quit()
 
+    def on_fav_food_select(self,event=None):
+        lb_widget = event.widget
+        index = int(lb_widget.curselection()[0])
+        lb_value = lb_widget.get(index)
+
+        self.fav_food_label['text']="I'll get you "+lb_value
+
+
+
     def __init__(self,root):
         root.title("Toolbar Example")
 
@@ -46,6 +55,8 @@ class TkInterEx:
 
         toolbar.pack(side=TOP,fill=X)
         root.config(menu=menubar)
+
+        
 
 root = Tk()
 root.geometry('600x550')
