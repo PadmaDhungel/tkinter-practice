@@ -11,10 +11,33 @@ class StudentDB:
 
 
     def setup_db(self):
-        print('setup database')
+
+        #open or create a db
+        self.db_conn = sqlite.connect('student.db')
+
+        #Create Cursor
+        self.theCursor = self.db_conn.cursor()
+
+        try:
+
+            #Create the table if it doesn't exist
+            self.db_conn.execute("CREATE TABLE if not exists Students(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FName TEXT NOT NULL, LName TEXT NOT NULL);")
+            self.db_conn.commit()
+
+        except sqlite.OperationalError:
+            print('Table not created, there was an error')
+
 
     def stud_submit(self):
-        print('submit student')
+        # Insert the student into the database
+        self.db_conn.execute('INSERT INTO Students(FName,LName)'+"VALUES ('"+self.fn_entry_value.get()+"', '"+self.ln_entry_value.get()+"')")
+
+        # clear entry boxes
+        self.fn_entry.delete(0,"end")
+        self.ln_entry.delete(0,"end")
+
+        # Update listbox
+        self.update_listbox()
 
     def update_listbox(self):
         print('update listbox')
