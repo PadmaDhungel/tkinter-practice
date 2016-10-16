@@ -40,10 +40,28 @@ class StudentDB:
         self.update_listbox()
 
     def update_listbox(self):
-        print('update listbox')
+        # Delete items in List Box
+        self.list_box.delete(0,END)
+
+        # get the students from the database
+        try:
+            result = self.theCursor.execute("SELECT ID,FName,LName FROM Students")
+            for row in result:
+                stud_id = row[0]
+                stud_fname = row[1]
+                stud_lname = row[2]
+            #  put students in the list box
+            self.list_box.insert(stud_id,stud_fname+' '+stud_lname)
+
+        except sqlite.OperationalError:
+            print('table doesnt exist')
+        except:
+            print('coudnt retrieve data')
+
+
 
     def load_student(self):
-        print('load student')
+        #get the 
 
     def update_student(self):
         print('update student')
